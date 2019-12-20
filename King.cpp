@@ -13,10 +13,10 @@ King::~King()
 
 unsigned int King::move(char x_cordinate, int y_cordinate, Board borad)
 {
-
+	return 0;
 }
 
 bool King::check_leggal_movement() const
 {
-
+	return 0;
 }

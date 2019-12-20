@@ -11,12 +11,15 @@ class Piece
 {
 protected:
 	char _x_cordinate;
-	unsigned int _y_cordinate;
+	int _y_cordinate;
 	bool _color;
 	string _type;
 public:
 	Piece(char x_cordinate, int y_cordinate, bool color, string type);
 	~Piece();
+
+	char get_x_cordinate() const;
+	unsigned int get_y_cordinate() const;
 
 	virtual unsigned int move(char x_cordinate, int y_cordinate, Board borad) = 0;
 protected: 

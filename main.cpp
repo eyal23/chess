@@ -5,8 +5,11 @@ in order to read and write information from and to the Backend
 */
 
 #include "Pipe.h"
+#include "Board.h"
 #include <iostream>
 #include <thread>
+
+#define START_STRING "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1"
 
 using std::cout;
 using std::endl;
@@ -16,7 +19,6 @@ using std::string;
 void main()
 {
 	srand(time_t(NULL));
-
 	
 	Pipe p;
 	bool isConnect = p.connect();
@@ -46,7 +48,9 @@ void main()
 	// msgToGraphics should contain the board string accord the protocol
 	// YOUR CODE
 
-	strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1"); // just example...
+	Board board;
+
+	strcpy_s(msgToGraphics, START_STRING); // just example...
 	
 	p.sendMessageToGraphics(msgToGraphics);   // send the board string
 
