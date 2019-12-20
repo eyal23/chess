@@ -1,5 +1,15 @@
 #pragma once
-class Bishop
+
+#include "Piece.h"
+
+class Bishop: public Piece
 {
+public:
+	Bishop(char x_cordinate, int y_cordinate, bool color);
+	~Bishop();
+
+	unsigned int move(char x_cordinate, int y_cordinate, Board borad) override;
+private:
+	bool check_leggal_movement() const override;
 };
 
