@@ -13,12 +13,22 @@ Piece::~Piece()
 
 char Piece::get_x_cordinate() const
 {
-	return 0;
+	return this->_x_cordinate;
 }
 
 unsigned int Piece::get_y_cordinate() const
 {
-	return 0;
+	return this->_y_cordinate;
+}
+
+string Piece::get_type() const
+{
+	return this->_type;
+}
+
+bool Piece::get_color() const
+{
+	return this->_color;
 }
 
 bool Piece::check_my_color(Board& board) const

@@ -20,6 +20,8 @@ public:
 
 	char get_x_cordinate() const;
 	unsigned int get_y_cordinate() const;
+	string get_type() const;
+	bool get_color() const;
 
 	virtual unsigned int move(char x_cordinate, int y_cordinate, Board borad) = 0;
 protected: 

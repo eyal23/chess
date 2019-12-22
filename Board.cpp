@@ -73,6 +73,7 @@ void Board::remove_piece(char x_cordinate, int y_cordinate)
 	{
 		if (this->_pieces[runs]->get_x_cordinate() == x_cordinate && this->_pieces[runs]->get_y_cordinate() == y_cordinate)
 		{
+			delete this->_pieces[runs];
 			this->_pieces.erase(this->_pieces.begin() + runs);
 			break;
 		}
@@ -81,7 +82,24 @@ void Board::remove_piece(char x_cordinate, int y_cordinate)
 
 bool Board::check_chess() const
 {
-	return 0;
+	int king_index = NULL;
+
+	for (king_index = 0; king_index < this->_pieces.size(); king_index++)
+	{
+		if (this->_pieces[king_index]->get_type() == "King" && this->_pieces[king_index]->get_color() == this->_current_color)
+		{
+			break;
+		}
+	}
+
+	return check_chess_diagonal(king_index, -1, -1) ||
+		check_chess_diagonal(king_index, -1, 1) ||
+		check_chess_diagonal(king_index, 1, -1) ||
+		check_chess_diagonal(king_index, -1, 1) ||
+		check_chess_straight(king_index, false, -1) ||
+		check_chess_straight(king_index, false, 1) ||
+		check_chess_straight(king_index, true, -1) ||
+		check_chess_straight(king_index, true, 1);
 }
 
 bool Board::check_mate() const
@@ -141,4 +159,77 @@ void Board::add_piece(char type, char x_cordinate, int y_cordinate)
 		}
 		this->_pieces.push_back(new Pawn(x_cordinate, y_cordinate, color));
 	}
+}
+
+bool Board::check_chess_diagonal(int king_index, int x_factor, int y_factor) const
+{
+	int distance = NULL;
+	int current_y = this->_pieces[king_index]->get_y_cordinate() + y_factor;
+	char current_x = this->_pieces[king_index]->get_x_cordinate() + x_factor;
+
+	for (distance = 1; current_x >= 'a' && current_x <= 'h' && current_x >= 1 && current_x <= 8; current_x += x_factor, current_y += y_factor, distance++)
+	{
+		Piece* current_piece = get_piece(current_x, current_y);
+
+		if (current_piece != nullptr)
+		{
+			if (this->_pieces[king_index]->get_color() != current_piece->get_color())
+			{
+				if (current_piece->get_type() == "Queen" ||
+					current_piece->get_type() == "Bishop" ||
+					current_piece->get_type() == "Pawn" && distance == 1 ||
+					current_piece->get_type() == "King" && distance == 1)
+				{
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+bool Board::check_chess_straight(int king_index, bool x_y, int factor) const
+{
+	int distance = NULL;
+	int current_y = this->_pieces[king_index]->get_y_cordinate();
+	char current_x = this->_pieces[king_index]->get_x_cordinate();
+
+	if (x_y)
+	{
+		current_y += factor;
+	}
+	else
+	{
+		current_y += factor;
+	}
+
+	while (current_x >= 'a' && current_x <= 'h' && current_x >= 1 && current_x <= 8)
+	{
+		Piece* current_piece = get_piece(current_x, current_y);
+
+		if (current_piece != nullptr)
+		{
+			if (this->_pieces[king_index]->get_color() != current_piece->get_color())
+			{
+				if (current_piece->get_type() == "Queen" ||
+					current_piece->get_type() == "Rook" ||
+					current_piece->get_type() == "King" && distance == 1)
+				{
+					return true;
+				}
+			}
+		}
+
+		if (x_y)
+		{
+			current_y += factor;
+		}
+		else
+		{
+			current_y += factor;
+		}
+	}
+
+	return false;
 }

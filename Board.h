@@ -27,4 +27,6 @@ public:
 	bool check_mate() const;
 private:
 	void add_piece(const char type, const char x_cordinate, const int y_cordinate);
+	bool check_chess_diagonal(int king_index, int x_factor, int y_factor) const;
+	bool check_chess_straight(int king_index, bool x_y, int factor) const;
 };
