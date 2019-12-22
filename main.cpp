@@ -50,9 +50,11 @@ void main()
 
 	Board board;
 
-	strcpy_s(msgToGraphics, START_STRING); // just example...
+	strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1"); // just example...
 	
 	p.sendMessageToGraphics(msgToGraphics);   // send the board string
+
+	std::cout << board.check_chess();
 
 	// get message from graphics
 	string msgFromGraphics = p.getMessageFromGraphics();

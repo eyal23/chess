@@ -167,7 +167,7 @@ bool Board::check_chess_diagonal(int king_index, int x_factor, int y_factor) con
 	int current_y = this->_pieces[king_index]->get_y_cordinate() + y_factor;
 	char current_x = this->_pieces[king_index]->get_x_cordinate() + x_factor;
 
-	for (distance = 1; current_x >= 'a' && current_x <= 'h' && current_x >= 1 && current_x <= 8; current_x += x_factor, current_y += y_factor, distance++)
+	for (distance = 1; current_x >= 'a' && current_x <= 'h' && current_y >= 1 && current_y <= 8; current_x += x_factor, current_y += y_factor, distance++)
 	{
 		Piece* current_piece = get_piece(current_x, current_y);
 
@@ -175,14 +175,15 @@ bool Board::check_chess_diagonal(int king_index, int x_factor, int y_factor) con
 		{
 			if (this->_pieces[king_index]->get_color() != current_piece->get_color())
 			{
-				if (current_piece->get_type() == "Queen" ||
+				return current_piece->get_type() == "Queen" ||
 					current_piece->get_type() == "Bishop" ||
 					current_piece->get_type() == "Pawn" && distance == 1 ||
-					current_piece->get_type() == "King" && distance == 1)
-				{
-					return true;
-				}
+					current_piece->get_type() == "King" && distance == 1;
 			}
+		}
+		else
+		{
+			break;
 		}
 	}
 
@@ -201,10 +202,10 @@ bool Board::check_chess_straight(int king_index, bool x_y, int factor) const
 	}
 	else
 	{
-		current_y += factor;
+		current_x += factor;
 	}
 
-	while (current_x >= 'a' && current_x <= 'h' && current_x >= 1 && current_x <= 8)
+	while (current_x >= 'a' && current_x <= 'h' && current_y >= 1 && current_y <= 8)
 	{
 		Piece* current_piece = get_piece(current_x, current_y);
 
@@ -220,6 +221,10 @@ bool Board::check_chess_straight(int king_index, bool x_y, int factor) const
 				}
 			}
 		}
+		else
+		{
+			break;
+		}
 
 		if (x_y)
 		{
@@ -227,7 +232,7 @@ bool Board::check_chess_straight(int king_index, bool x_y, int factor) const
 		}
 		else
 		{
-			current_y += factor;
+			current_x += factor;
 		}
 	}
 
