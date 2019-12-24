@@ -16,7 +16,7 @@ unsigned int Bishop::move(char x_cordinate, int y_cordinate, Board borad)
 	return 0;
 }
 
-bool Bishop::check_leggal_movement() const
+bool Bishop::check_leggal_movement(char x_cordiante, int y_cordinate) const
 {
 	return 0;
 }

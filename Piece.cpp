@@ -55,3 +55,8 @@ bool Piece::check_no_movement() const
 {
 	return 0;
 }
+
+int Piece::get_distance(char x_cordiante, int y_cordinate) const
+{
+
+}

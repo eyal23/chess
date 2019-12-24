@@ -30,6 +30,10 @@ Board::Board()
 
 Board::~Board()
 {
+	for (int runs = 0; runs < this->_pieces.size(); runs++)
+	{
+		delete this->_pieces[runs];
+	}
 }
 
 vector<Piece*> Board::get_all_pieces() const
@@ -180,10 +184,10 @@ bool Board::check_chess_diagonal(int king_index, int x_factor, int y_factor) con
 					current_piece->get_type() == "Pawn" && distance == 1 ||
 					current_piece->get_type() == "King" && distance == 1;
 			}
-		}
-		else
-		{
-			break;
+			else
+			{
+				break;
+			}
 		}
 	}
 
@@ -220,10 +224,10 @@ bool Board::check_chess_straight(int king_index, bool x_y, int factor) const
 					return true;
 				}
 			}
-		}
-		else
-		{
-			break;
+			else
+			{
+				break;
+			}
 		}
 
 		if (x_y)
@@ -238,3 +242,10 @@ bool Board::check_chess_straight(int king_index, bool x_y, int factor) const
 
 	return false;
 }
+
+/*bool Board::check_chess_knight(int king_index) const
+{
+
+
+	return false;
+}*/

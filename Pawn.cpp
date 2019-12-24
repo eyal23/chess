@@ -16,7 +16,7 @@ unsigned int Pawn::move(char x_cordinate, int y_cordinate, Board borad)
 	return 0;
 }
 
-bool Pawn::check_leggal_movement() const
+bool Pawn::check_leggal_movement(char x_cordiante, int y_cordinate) const
 {
 	return 0;
 }
