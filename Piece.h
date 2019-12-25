@@ -25,12 +25,8 @@ public:
 
 	virtual unsigned int move(char x_cordinate, int y_cordinate, Board borad) = 0;
 protected: 
-	bool check_my_color(Board& board) const;
 	bool check_jump_over_piece(Board& board) const;
-	bool check_out_of_board() const;
-	bool check_chess(Board& board) const;
-	bool check_no_movement() const;
-	virtual bool check_leggal_movement(char x_cordiante, int y_cordinate) const = 0;
+	virtual bool check_leggal_movement(char x_cordinate, int y_cordinate) const = 0;
 
 	int* get_differences(char x_cordiante, int y_cordinate) const;
 };

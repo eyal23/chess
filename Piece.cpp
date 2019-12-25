@@ -29,27 +29,7 @@ bool Piece::get_color() const
 	return this->_color;
 }
 
-bool Piece::check_my_color(Board& board) const
-{
-	return (this->_color == (board.get_current_color()));
-}
-
 bool Piece::check_jump_over_piece(Board& board) const
-{
-	return 0;
-}
-
-bool Piece::check_out_of_board() const
-{
-	return 0;
-}
-
-bool Piece::check_chess(Board& board) const
-{
-	return 0;
-}
-
-bool Piece::check_no_movement() const
 {
 	return 0;
 }

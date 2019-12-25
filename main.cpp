@@ -55,7 +55,7 @@ void main()
 	
 	p.sendMessageToGraphics(msgToGraphics);   // send the board string
 
-	std::cout << board.check_chess();
+	//std::cout << board.check_chess();
 
 	// get message from graphics
 	string msgFromGraphics = p.getMessageFromGraphics();

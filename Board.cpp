@@ -6,9 +6,7 @@
 #include "Rook.h"
 #include "Bishop.h"
 #include "Pawn.h"
-
-#define MAX_X 'h'
-#define MAX_Y 8
+#define MAX 8
 
 using std::string;
 
@@ -17,11 +15,11 @@ Board::Board()
 	int runs = 0;
 	string start_string = "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1";
 
-	for (int current_y = MAX_Y; current_y > 0; current_y--)
+	for (int y = MAX - 1; y > -1; y--)
 	{
-		for (char current_x = 'a'; current_x <= MAX_X; current_x++, runs++)
+		for (int x = 0; x < MAX; x++, runs++)
 		{
-			add_piece(start_string[runs], current_x, current_y);
+			add_piece(start_string[runs], x, y);
 		}
 	}
 
@@ -30,28 +28,43 @@ Board::Board()
 
 Board::~Board()
 {
-	for (int runs = 0; runs < this->_pieces.size(); runs++)
+	for (int x = 0; x < 8; x++)
 	{
-		delete this->_pieces[runs];
-	}
-}
-
-vector<Piece*> Board::get_all_pieces() const
-{
-	return this->_pieces;
-}
-
-Piece* Board::get_piece(char x_cordinate, int y_cordinate) const
-{
-	for (int runs = 0; runs < this->_pieces.size(); runs++)
-	{
-		if (this->_pieces[runs]->get_x_cordinate() == x_cordinate && this->_pieces[runs]->get_y_cordinate() == y_cordinate)
+		for (int y = 0; y < 8; y++)
 		{
-			return this->_pieces[runs];
+			delete this->_pieces[x][y];
 		}
 	}
+}
 
-	return nullptr;
+string Board::move(string& user_msg)
+{
+	int* cordinates = convert_string(user_msg);
+
+	if (check_my_color(cordinates[0], cordinates[1]))
+	{
+		return "2";
+	}
+	else if (check_destination(cordinates[2], cordinates[3]))
+	{
+		return "3";
+	}
+	else if (this->_pieces[cordinates[0]][cordinates[1]].)
+	{
+
+	}
+}
+
+int* Board::convert_string(string& user_str) const
+{
+	int cordinates[4] = { user_str[0] - 98, user_str[1] - 49, user_str[2] - 98, user_str[3] - 49 };
+
+	return cordinates;
+}
+
+Piece* Board::get_piece(int x_cordinate, int y_cordinate) const
+{
+	return this->_pieces[x_cordinate][y_cordinate];
 }
 
 bool Board::get_current_color() const
@@ -61,57 +74,55 @@ bool Board::get_current_color() const
 
 void Board::switch_color()
 {
-	if (this->_current_color)
-	{
-		this->_current_color = false;
-	}
-	else
-	{
-		this->_current_color = true;
-	}
-}
-
-void Board::remove_piece(char x_cordinate, int y_cordinate)
-{
-	for (int runs = 0; runs < this->_pieces.size(); runs++)
-	{
-		if (this->_pieces[runs]->get_x_cordinate() == x_cordinate && this->_pieces[runs]->get_y_cordinate() == y_cordinate)
-		{
-			delete this->_pieces[runs];
-			this->_pieces.erase(this->_pieces.begin() + runs);
-			break;
-		}
-	}
+	this->_current_color = !this->_current_color;
 }
 
 bool Board::check_chess() const
 {
-	int king_index = NULL;
+	int x = 0, y = 0;
 
-	for (king_index = 0; king_index < this->_pieces.size(); king_index++)
+	for (x = 0; x < 8; x++)
 	{
-		if (this->_pieces[king_index]->get_type() == "King" && this->_pieces[king_index]->get_color() == this->_current_color)
+		for (y = 0; y < 8; y++)
 		{
-			break;
+			if (this->_pieces[x][y]->get_type() == "King" && this->_pieces[x][y]->get_color() == this->_current_color)
+			{
+				break;
+			}
 		}
 	}
 
-	return check_chess_diagonal(king_index, -1, -1) ||
-		check_chess_diagonal(king_index, -1, 1) ||
-		check_chess_diagonal(king_index, 1, -1) ||
-		check_chess_diagonal(king_index, -1, 1) ||
-		check_chess_straight(king_index, false, -1) ||
-		check_chess_straight(king_index, false, 1) ||
-		check_chess_straight(king_index, true, -1) ||
-		check_chess_straight(king_index, true, 1);
+	return check_chess_diagonal(x, y, -1, -1) ||
+		check_chess_diagonal(x, y, -1, 1) ||
+		check_chess_diagonal(x, y, 1, -1) ||
+		check_chess_diagonal(x, y, -1, 1) ||
+		check_chess_straight(x, y, false, -1) ||
+		check_chess_straight(x, y, false, 1) ||
+		check_chess_straight(x, y, true, -1) ||
+		check_chess_straight(x, y, true, 1);
 }
 
-bool Board::check_mate() const
+bool Board::check_my_color(int x, int y)
 {
-	return 0;
+	if (this->_pieces[x][y] == nullptr)
+	{
+		return true;
+	}
+
+	return this->_pieces[x][y]->get_color() != this->_current_color;
 }
 
-void Board::add_piece(char type, char x_cordinate, int y_cordinate)
+bool Board::check_destination(int x, int y)
+{
+	if (this->_pieces[x][y] == nullptr)
+	{
+		return false;
+	}
+
+	return this->_pieces[x][y]->get_color() == this->_current_color;
+}
+
+void Board::add_piece(char type, int x, int y)
 {
 	bool color = 0;
 
@@ -121,7 +132,7 @@ void Board::add_piece(char type, char x_cordinate, int y_cordinate)
 		{
 			color = true;
 		}
-		this->_pieces.push_back(new King(x_cordinate, y_cordinate, color));
+		this->_pieces[x][y] = new King(x, y, color);
 	}
 	else if (type == 'q' || type == 'Q')
 	{
@@ -129,7 +140,7 @@ void Board::add_piece(char type, char x_cordinate, int y_cordinate)
 		{
 			color = true;
 		}
-		this->_pieces.push_back(new Queen(x_cordinate, y_cordinate, color));
+		this->_pieces[x][y] = new Queen(x, y, color);
 	}
 	else if (type == 'r' || type == 'R')
 	{
@@ -137,7 +148,7 @@ void Board::add_piece(char type, char x_cordinate, int y_cordinate)
 		{
 			color = true;
 		}
-		this->_pieces.push_back(new Rook(x_cordinate, y_cordinate, color));
+		this->_pieces[x][y] = new Rook(x, y, color);
 	}
 	else if (type == 'n' || type == 'N')
 	{
@@ -145,7 +156,7 @@ void Board::add_piece(char type, char x_cordinate, int y_cordinate)
 		{
 			color = true;
 		}
-		this->_pieces.push_back(new Knight(x_cordinate, y_cordinate, color));
+		this->_pieces[x][y] = new Knight(x, y, color);
 	}
 	else if (type == 'b' || type == 'B')
 	{
@@ -153,7 +164,7 @@ void Board::add_piece(char type, char x_cordinate, int y_cordinate)
 		{
 			color = true;
 		}
-		this->_pieces.push_back(new Bishop(x_cordinate, y_cordinate, color));
+		this->_pieces[x][y] = new Bishop(x, y, color);
 	}
 	else if (type == 'p' || type == 'P')
 	{
@@ -161,15 +172,15 @@ void Board::add_piece(char type, char x_cordinate, int y_cordinate)
 		{
 			color = true;
 		}
-		this->_pieces.push_back(new Pawn(x_cordinate, y_cordinate, color));
+		this->_pieces[x][y] = new Pawn(x, y, color);
 	}
 }
 
-bool Board::check_chess_diagonal(int king_index, int x_factor, int y_factor) const
+bool Board::check_chess_diagonal(int king_x, int king_y, int x_factor, int y_factor) const
 {
 	int distance = NULL;
-	int current_y = this->_pieces[king_index]->get_y_cordinate() + y_factor;
-	char current_x = this->_pieces[king_index]->get_x_cordinate() + x_factor;
+	int current_y = this->_pieces[king_x][king_y]->get_y_cordinate() + y_factor;
+	int current_x = this->_pieces[king_x][king_y]->get_x_cordinate() + x_factor;
 
 	for (distance = 1; current_x >= 'a' && current_x <= 'h' && current_y >= 1 && current_y <= 8; current_x += x_factor, current_y += y_factor, distance++)
 	{
@@ -177,7 +188,7 @@ bool Board::check_chess_diagonal(int king_index, int x_factor, int y_factor) con
 
 		if (current_piece != nullptr)
 		{
-			if (this->_pieces[king_index]->get_color() != current_piece->get_color())
+			if (this->_pieces[king_x][king_y]->get_color() != current_piece->get_color())
 			{
 				return current_piece->get_type() == "Queen" ||
 					current_piece->get_type() == "Bishop" ||
@@ -194,11 +205,11 @@ bool Board::check_chess_diagonal(int king_index, int x_factor, int y_factor) con
 	return false;
 }
 
-bool Board::check_chess_straight(int king_index, bool x_y, int factor) const
+bool Board::check_chess_straight(int king_x, int king_y, bool x_y, int factor) const
 {
 	int distance = NULL;
-	int current_y = this->_pieces[king_index]->get_y_cordinate();
-	char current_x = this->_pieces[king_index]->get_x_cordinate();
+	int current_y = this->_pieces[king_x][king_y]->get_y_cordinate();
+	char current_x = this->_pieces[king_x][king_y]->get_x_cordinate();
 
 	if (x_y)
 	{
@@ -215,7 +226,7 @@ bool Board::check_chess_straight(int king_index, bool x_y, int factor) const
 
 		if (current_piece != nullptr)
 		{
-			if (this->_pieces[king_index]->get_color() != current_piece->get_color())
+			if (this->_pieces[king_x][king_y]->get_color() != current_piece->get_color())
 			{
 				if (current_piece->get_type() == "Queen" ||
 					current_piece->get_type() == "Rook" ||

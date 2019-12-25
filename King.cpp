@@ -16,7 +16,7 @@ unsigned int King::move(char x_cordinate, int y_cordinate, Board borad)
 	return 0;
 }
 
-bool King::check_leggal_movement(char x_cordiante, int y_cordinate) const
+bool King::check_leggal_movement(char x_cordinate, int y_cordinate) const
 {
 	return 0;
 }
