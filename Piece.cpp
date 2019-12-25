@@ -33,7 +33,7 @@ bool Piece::get_color() const
 
 bool Piece::check_my_color(Board& board) const
 {
-	return 0;
+	return (this->_color == (board.get_current_color()));
 }
 
 bool Piece::check_jump_over_piece(Board& board) const
