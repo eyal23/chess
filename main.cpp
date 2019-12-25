@@ -15,6 +15,7 @@ using std::cout;
 using std::endl;
 using std::string;
 
+int* get_x_and_y(string str);
 
 void main()
 {
@@ -82,4 +83,9 @@ void main()
 	}
 
 	p.close();
+}
+
+int* get_x_and_y(string str)
+{
+
 }

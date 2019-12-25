@@ -32,5 +32,5 @@ protected:
 	bool check_no_movement() const;
 	virtual bool check_leggal_movement(char x_cordiante, int y_cordinate) const = 0;
 
-	int get_distance(char x_cordiante, int y_cordinate) const;
+	int* get_differences(char x_cordiante, int y_cordinate) const;
 };
