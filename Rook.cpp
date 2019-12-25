@@ -16,7 +16,7 @@ unsigned int Rook::move(char x_cordinate, int y_cordinate, Board borad)
 	return 0;
 }
 
-bool Rook::check_leggal_movement() const
+bool Rook::check_leggal_movement(char x_cordinate, int y_cordinate) const
 {
-	return 0;
+	return this->_x_cordinate == x_cordinate || this->_y_cordinate == y_cordinate;
 }

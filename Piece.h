@@ -30,5 +30,7 @@ protected:
 	bool check_out_of_board() const;
 	bool check_chess(Board& board) const;
 	bool check_no_movement() const;
-	virtual bool check_leggal_movement() const = 0;
+	virtual bool check_leggal_movement(char x_cordiante, int y_cordinate) const = 0;
+
+	int* get_differences(char x_cordiante, int y_cordinate) const;
 };

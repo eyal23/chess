@@ -15,6 +15,7 @@ using std::cout;
 using std::endl;
 using std::string;
 
+int* get_x_and_y(string str);
 
 void main()
 {
@@ -50,7 +51,7 @@ void main()
 
 	Board board;
 
-	strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1"); // just example...
+	strcpy_s(msgToGraphics, START_STRING); // just example...
 	
 	p.sendMessageToGraphics(msgToGraphics);   // send the board string
 
@@ -82,4 +83,9 @@ void main()
 	}
 
 	p.close();
+}
+
+int* get_x_and_y(string str)
+{
+
 }
