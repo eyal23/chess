@@ -11,7 +11,7 @@ Queen::~Queen()
 
 }
 
-unsigned int Queen::move(char x_cordinate, int y_cordinate, Board borad)
+unsigned int Queen::move(char x_cordinate, int y_cordinate, Board& borad)
 {
 	return 0;
 }

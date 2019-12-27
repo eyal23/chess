@@ -13,7 +13,7 @@ using std::string;
 Board::Board()
 {
 	int runs = 0;
-	string start_string = "rnbkqbnrpppppppp###########################n####PPPPPPPPRNBKQBNR1";
+	string start_string = "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1";
 
 	for (int y = MAX - 1; y > -1; y--)
 	{
@@ -37,29 +37,56 @@ Board::~Board()
 	}
 }
 
-string Board::move(string& user_msg)
+char* Board::move(string& user_msg)
 {
 	int* cordinates = convert_string(user_msg);
+	int src_x = cordinates[0], src_y = cordinates[1], dst_x = cordinates[2], dst_y = cordinates[3];
+	Piece & src_piece = *this->_pieces[src_x][src_y], & dst_piece = *this->_pieces[dst_x][dst_y];
 
-	/*if (check_my_color(cordinates[0], cordinates[1]))
+	if (check_my_color(src_x, src_y))
 	{
-		return "2";
+		char return_value[2] = { '2', NULL };
+		return return_value;
 	}
-	else if (check_destination(cordinates[2], cordinates[3]))
+	else if (check_destination(dst_x, dst_y))
 	{
-		return "3";
+		char return_value[2] = { '3', NULL };
+		return return_value;
 	}
-	else if (this->_pieces[cordinates[0]][cordinates[1]].)
+	/*else if (this->_pieces[src_x][src_y]->move(dst_x, dst_y, *this))
 	{
-
+		char return_value[2] = { '6', NULL };
+		return return_value;
 	}*/
 
-	return "a";
+	this->_pieces[dst_x][dst_y] = this->_pieces[src_x][src_y];
+	this->_pieces[src_x][src_y] = nullptr;
+
+	if (this->check_chess())
+	{
+		this->_pieces[src_x][src_y] = &src_piece;
+		this->_pieces[dst_x][dst_y] = &dst_piece;
+		char return_value[2] = { '4', NULL };
+		return return_value;
+	}
+	
+	this->switch_color();
+
+	if (this->check_chess())
+	{
+		char return_value[2] = { '1', NULL };
+		return return_value;
+	}
+	else
+	{
+		char return_value[2] = { '0', NULL };
+		return return_value;
+	}
 }
 
 int* Board::convert_string(string& user_str) const
 {
-	int cordinates[4] = { user_str[0] - 98, user_str[1] - 49, user_str[2] - 98, user_str[3] - 49 };
+	int cordinates[4] = { user_str[0] - 97, user_str[1] - 49, user_str[2] - 97, user_str[3] - 49 };
 
 	return cordinates;
 }
@@ -104,7 +131,7 @@ bool Board::check_chess() const
 	return check_chess_diagonal(x, y, -1, -1) ||
 		check_chess_diagonal(x, y, -1, 1) ||
 		check_chess_diagonal(x, y, 1, -1) ||
-		check_chess_diagonal(x, y, -1, 1) ||
+		check_chess_diagonal(x, y, 1, 1) ||
 		check_chess_straight(x, y, false, -1) ||
 		check_chess_straight(x, y, false, 1) ||
 		check_chess_straight(x, y, true, -1) ||
@@ -193,12 +220,12 @@ void Board::add_piece(char type, int x, int y)
 bool Board::check_chess_diagonal(int king_x, int king_y, int x_factor, int y_factor) const
 {
 	int distance = NULL;
-	int y = this->_pieces[king_x][king_y]->get_y_cordinate() + y_factor;
-	int x = this->_pieces[king_x][king_y]->get_x_cordinate() + x_factor;
+	int y = king_y + y_factor;
+	int x = king_x + x_factor;
 
 	for (distance = 1; x > -1 && x < MAX && y > -1 && y < MAX; x += x_factor, y += y_factor, distance++)
 	{
-		Piece* current_piece = get_piece(x, y);
+		Piece* current_piece = this->_pieces[x][y];
 
 		if (current_piece != nullptr)
 		{
@@ -229,8 +256,8 @@ bool Board::check_chess_diagonal(int king_x, int king_y, int x_factor, int y_fac
 bool Board::check_chess_straight(int king_x, int king_y, bool x_y, int factor) const
 {
 	int distance = NULL;
-	int y = this->_pieces[king_x][king_y]->get_y_cordinate();
-	int x = this->_pieces[king_x][king_y]->get_x_cordinate();
+	int y = king_x;
+	int x = king_x;
 
 	if (x_y)
 	{

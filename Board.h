@@ -21,8 +21,8 @@ public:
 	bool get_current_color() const;
 	void switch_color();
 	
-	string move(string& user_msg);
-public:
+	char* move(string& user_msg);
+private:
 	int* convert_string(string& user_str) const;
 
 	bool check_my_color(int x_cordinate, int y_cordinate);

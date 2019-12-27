@@ -9,7 +9,7 @@ in order to read and write information from and to the Backend
 #include <iostream>
 #include <thread>
 
-#define START_STRING "rnbkqbnrpppppppp###########################n####PPPPPPPPRNBKQBNR1"
+#define START_STRING "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1"
 
 using std::cout;
 using std::endl;
@@ -53,8 +53,6 @@ void main()
 	
 	p.sendMessageToGraphics(msgToGraphics);   // send the board string
 
-	std::cout << board.check_chess();
-
 	// get message from graphics
 	string msgFromGraphics = p.getMessageFromGraphics();
 
@@ -62,14 +60,14 @@ void main()
 	{
 		// should handle the string the sent from graphics
 		// according the protocol. Ex: e2e4           (move e2 to e4)
-		
+
 		// YOUR CODE
-		strcpy_s(msgToGraphics, "YOUR CODE"); // msgToGraphics should contain the result of the operation
+		strcpy_s(msgToGraphics, 2, board.move(msgFromGraphics)); // msgToGraphics should contain the result of the operation
 
 		/******* JUST FOR EREZ DEBUGGING ******/
-		int r = rand() % 10; // just for debugging......
+		/*int r = rand() % 10; // just for debugging......
 		msgToGraphics[0] = (char)(1 + '0');
-		msgToGraphics[1] = 0;
+		msgToGraphics[1] = 0;*/
 		/******* JUST FOR EREZ DEBUGGING ******/
 
 

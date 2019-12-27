@@ -11,7 +11,7 @@ Bishop::~Bishop()
 
 }
 
-unsigned int Bishop::move(char x_cordinate, int y_cordinate, Board borad)
+unsigned int Bishop::move(char x_cordinate, int y_cordinate, Board& borad)
 {
 	return 0;
 }

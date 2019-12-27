@@ -11,7 +11,7 @@ Rook::~Rook()
 
 }
 
-unsigned int Rook::move(char x_cordinate, int y_cordinate, Board borad)
+unsigned int Rook::move(char x_cordinate, int y_cordinate, Board& borad)
 {
 	return 0;
 }
