@@ -13,7 +13,7 @@ using std::string;
 Board::Board()
 {
 	int runs = 0;
-	string start_string = "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1";
+	string start_string = "rnbkqbnrpppppppp###########################n####PPPPPPPPRNBKQBNR1";
 
 	for (int y = MAX - 1; y > -1; y--)
 	{
@@ -108,7 +108,8 @@ bool Board::check_chess() const
 		check_chess_straight(x, y, false, -1) ||
 		check_chess_straight(x, y, false, 1) ||
 		check_chess_straight(x, y, true, -1) ||
-		check_chess_straight(x, y, true, 1);
+		check_chess_straight(x, y, true, 1) ||
+		check_chess_knight(x, y);
 }
 
 bool Board::check_my_color(int x, int y)
@@ -278,9 +279,49 @@ bool Board::check_chess_straight(int king_x, int king_y, bool x_y, int factor) c
 	return false;
 }
 
-/*bool Board::check_chess_knight(int king_index) const
+bool Board::check_chess_knight(int king_x, int king_y) const
 {
+	int runs1 = 0, runs2 = 0, runs3 = 0, kx = king_x, ky = king_y;
+	int* temp = nullptr, * p1 = &kx, * p2 = &ky;
 
+	for (runs1 = 0; runs1 < 2; runs1++)
+	{
+		for (runs2 = 0, *p1 -= 2; runs2 < 2; runs2++, *p1 += 4)
+		{
+			for (runs3 = 0, *p2 -= 1; runs3 < 2; runs3++, *p2 += 2)
+			{
+				if (*p1 > -1 && *p1 < MAX && *p2 > -1 && *p2 < MAX)
+				{
+					Piece* current_piece = nullptr;
+
+					if (runs1)
+					{
+						current_piece = get_piece(*p2, *p1);
+					}
+					else
+					{
+						current_piece = get_piece(*p1, *p2);
+					}
+
+					if (current_piece != nullptr)
+					{
+						if (this->_pieces[king_x][king_y]->get_color() != current_piece->get_color() && current_piece->get_type() == "Knight")
+						{
+							return true;
+						}
+					}
+				}
+			}
+
+			*p2 -= 3;
+		}
+
+		*p1 -= 6;
+
+		temp = p1;
+		p1 = p2;
+		p2 = temp;
+	}
 
 	return false;
-}*/
+}

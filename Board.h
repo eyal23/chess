@@ -32,5 +32,5 @@ public:
 	void add_piece(char type, int x, int y);
 	bool check_chess_diagonal(int king_x, int king_y, int x_factor, int y_factor) const;
 	bool check_chess_straight(int king_x, int king_y, bool x_y, int factor) const;
-	//bool check_chess_knight(int king_index, int x_factor, int y_factor) const;
+	bool check_chess_knight(int king_x, int king_y) const;
 };
