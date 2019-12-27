@@ -22,7 +22,7 @@ public:
 	void switch_color();
 	
 	string move(string& user_msg);
-private:
+public:
 	int* convert_string(string& user_str) const;
 
 	bool check_my_color(int x_cordinate, int y_cordinate);

@@ -15,8 +15,6 @@ using std::cout;
 using std::endl;
 using std::string;
 
-int* get_x_and_y(string str);
-
 void main()
 {
 	srand(time_t(NULL));
@@ -55,7 +53,7 @@ void main()
 	
 	p.sendMessageToGraphics(msgToGraphics);   // send the board string
 
-	//std::cout << board.check_chess();
+	std::cout << board.check_chess();
 
 	// get message from graphics
 	string msgFromGraphics = p.getMessageFromGraphics();
@@ -83,9 +81,4 @@ void main()
 	}
 
 	p.close();
-}
-
-int* get_x_and_y(string str)
-{
-
 }
