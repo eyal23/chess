@@ -53,16 +53,12 @@ char* Board::move(string& user_msg)
 		char return_value[2] = { '3', NULL };
 		return return_value;
 	}
-	/*else if (this->_pieces[src_x][src_y]->move(dst_x, dst_y, *this))
+	else if (this->_pieces[src_x][src_y]->move(dst_x, dst_y, *this))
 	{
 		char return_value[2] = { '6', NULL };
 		return return_value;
-	}*/
-
-	this->_pieces[dst_x][dst_y] = this->_pieces[src_x][src_y];
-	this->_pieces[src_x][src_y] = nullptr;
-
-	if (this->check_chess())
+	}
+	else if (this->check_chess())
 	{
 		this->_pieces[src_x][src_y] = &src_piece;
 		this->_pieces[dst_x][dst_y] = &dst_piece;
