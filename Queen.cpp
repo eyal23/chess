@@ -11,12 +11,36 @@ Queen::~Queen()
 
 }
 
-unsigned int Queen::move(char x_cordinate, int y_cordinate, Board& borad)
+unsigned int Queen::move(int dst_x, int dst_y, Board& borad)
 {
-	return 0;
+	if (!check_leggal_movement(dst_x, dst_y))
+	{
+		/*
+			YOUR CODE
+		*/
+
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 
-bool Queen::check_leggal_movement(char x_cordiante, int y_cordinate) const
+bool Queen::check_leggal_movement(int dst_x, int dst_y)
 {
-	return 0;
+	int* differences = get_differences(dst_x, dst_y);
+
+	if (differences[0] == differences[1])
+	{
+		return false;
+	}
+	else if (differences[0] == 0 && differences[1] != 0 || differences[0] != 0 && differences[1] == 0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }

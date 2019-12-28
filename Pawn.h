@@ -10,8 +10,8 @@ public:
 	Pawn(char x_cordinate, int y_cordinate, bool color);
 	~Pawn();
 
-	unsigned int move(char x_cordinate, int y_cordinate, Board& borad) override;
+	unsigned int move(int dst_x, int dst_y, Board& borad) override;
 private:
-	bool check_leggal_movement(char x_cordiante, int y_cordinate) const override;
+	bool check_leggal_movement(int dst_x, int dst_y) override;
 };
 

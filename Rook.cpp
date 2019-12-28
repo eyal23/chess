@@ -11,12 +11,25 @@ Rook::~Rook()
 
 }
 
-unsigned int Rook::move(char x_cordinate, int y_cordinate, Board& borad)
+unsigned int Rook::move(int dst_x, int dst_y, Board& borad)
 {
-	return 0;
+	if (!check_leggal_movement(dst_x, dst_y))
+	{
+		/*
+			YOUR CODE
+		*/
+
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 
-bool Rook::check_leggal_movement(char x_cordinate, int y_cordinate) const
+bool Rook::check_leggal_movement(int dst_x, int dst_y)
 {
-	return this->_x_cordinate == x_cordinate || this->_y_cordinate == y_cordinate;
+	int* differences = get_differences(dst_x, dst_y);
+
+	return differences[0] == 0 && differences[1] != 0 || differences[0] != 0 && differences[1] == 0;
 }
