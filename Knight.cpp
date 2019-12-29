@@ -31,6 +31,14 @@ bool Knight::check_leggal_movement(int dst_x, int dst_y)
 {
 	int* differences = get_differences(dst_x, dst_y);
 
-	return !(differences[0] == 1 && differences[1] == 2) ||
-		!(differences[0] == 2 && differences[1] == 1);
+	if (differences[0] == 1 && differences[1] == 2)
+	{
+		return false;
+	}
+	else if (differences[0] == 2 && differences[1] == 1)
+	{
+		return false;
+	}
+
+	return true;
 }

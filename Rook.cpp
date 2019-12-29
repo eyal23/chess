@@ -31,5 +31,14 @@ bool Rook::check_leggal_movement(int dst_x, int dst_y)
 {
 	int* differences = get_differences(dst_x, dst_y);
 
-	return differences[0] == 0 && differences[1] != 0 || differences[0] != 0 && differences[1] == 0;
+	if (differences[0] == 0 && differences[1] != 0)
+	{
+		return false;
+	}
+	else if (differences[0] != 0 && differences[1] == 0)
+	{
+		return false;
+	}
+
+	return true;
 }

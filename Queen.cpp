@@ -35,12 +35,14 @@ bool Queen::check_leggal_movement(int dst_x, int dst_y)
 	{
 		return false;
 	}
-	else if (differences[0] == 0 && differences[1] != 0 || differences[0] != 0 && differences[1] == 0)
+	else if (differences[0] == 0 && differences[1] != 0)
 	{
 		return false;
 	}
-	else
+	else if (differences[0] != 0 && differences[1] == 0)
 	{
-		return true;
+		return false;
 	}
+
+	return true;
 }
