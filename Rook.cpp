@@ -15,10 +15,12 @@ unsigned int Rook::move(int dst_x, int dst_y, Board& borad)
 {
 	if (!check_leggal_movement(dst_x, dst_y))
 	{
-		/*
-			YOUR CODE
-		*/
-
+		if (this->_x_cordinate)
+		{
+		}
+		else if ()
+		{
+		}
 		return false;
 	}
 	else
