@@ -11,13 +11,12 @@ King::~King()
 
 }
 
-unsigned int King::move(int dst_x, int dst_y, Board& borad)
+unsigned int King::move(int dst_x, int dst_y, Board* borad)
 {
 	if (!check_leggal_movement(dst_x, dst_y))
 	{
-		/*
-			YOUR CODE
-		*/
+		this->_x_cordinate = dst_x;
+		this->_y_cordinate = dst_y;
 
 		return false;
 	}
@@ -31,5 +30,5 @@ bool King::check_leggal_movement(int dst_x, int dst_y)
 {
 	int* differences = get_differences(dst_x, dst_y);
 
-	return differences[0] != 1 || differences[1] != 1;
+	return differences[0] > 1 || differences[1] > 1;
 }

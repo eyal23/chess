@@ -11,13 +11,23 @@ Pawn::~Pawn()
 
 }
 
-unsigned int Pawn::move(int dst_x, int dst_y, Board& borad)
+unsigned int Pawn::move(int dst_x, int dst_y, Board* board)
 {
 	if (!check_leggal_movement(dst_x, dst_y))
 	{
-		/*
-			YOUR CODE
-		*/
+		int* differences = get_differences(dst_x, dst_y);
+
+		if (differences[0] == 0 && board->get_piece(dst_x, dst_y) != nullptr)
+		{
+			return true;
+		}
+		else if (differences[0] != 0 && board->get_piece(dst_x, dst_y) == nullptr)
+		{
+			return true;
+		}
+
+		this->_x_cordinate = dst_x;
+		this->_y_cordinate = dst_y;
 
 		return false;
 	}
@@ -29,7 +39,9 @@ unsigned int Pawn::move(int dst_x, int dst_y, Board& borad)
 
 bool Pawn::check_leggal_movement(int dst_x, int dst_y)
 {
-	if (dst_x - this->_x_cordinate == 0)
+	int* differences = get_differences(dst_x, dst_y);
+
+	if (differences[0] == 0 || differences[0] == 1)
 	{
 		if (this->_color)
 		{

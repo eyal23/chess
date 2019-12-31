@@ -41,7 +41,7 @@ char* Board::move(string& user_msg)
 {
 	int* cordinates = convert_string(user_msg);
 	int src_x = cordinates[0], src_y = cordinates[1], dst_x = cordinates[2], dst_y = cordinates[3];
-	Piece & src_piece = *this->_pieces[src_x][src_y], & dst_piece = *this->_pieces[dst_x][dst_y];
+	Piece* temp1 = nullptr, * temp2 = nullptr;
 
 	if (check_my_color(src_x, src_y))
 	{
@@ -53,17 +53,29 @@ char* Board::move(string& user_msg)
 		char return_value[2] = { '3', NULL };
 		return return_value;
 	}
-	else if (this->_pieces[src_x][src_y]->move(dst_x, dst_y, *this))
+	else if (this->_pieces[src_x][src_y]->move(dst_x, dst_y, this))
 	{
 		char return_value[2] = { '6', NULL };
 		return return_value;
 	}
-	else if (this->check_chess())
+
+	temp1 = this->_pieces[src_x][src_y];
+	temp2 = this->_pieces[dst_x][dst_y];
+	this->_pieces[dst_x][dst_y] = this->_pieces[src_x][src_y];
+	this->_pieces[src_x][src_y] = nullptr;
+
+	if (this->check_chess())
 	{
-		this->_pieces[src_x][src_y] = &src_piece;
-		this->_pieces[dst_x][dst_y] = &dst_piece;
+		this->_pieces[src_x][src_y] = temp1;
+		this->_pieces[dst_x][dst_y] = temp2;
+
 		char return_value[2] = { '4', NULL };
 		return return_value;
+	}
+
+	if (temp2 != nullptr)
+	{
+		delete temp2;
 	}
 	
 	this->switch_color();
@@ -252,7 +264,7 @@ bool Board::check_chess_diagonal(int king_x, int king_y, int x_factor, int y_fac
 bool Board::check_chess_straight(int king_x, int king_y, bool x_y, int factor) const
 {
 	int distance = NULL;
-	int y = king_x;
+	int y = king_y;
 	int x = king_x;
 
 	if (x_y)

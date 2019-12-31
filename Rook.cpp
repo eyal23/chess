@@ -11,22 +11,50 @@ Rook::~Rook()
 
 }
 
-unsigned int Rook::move(int dst_x, int dst_y, Board& borad)
+unsigned int Rook::move(int dst_x, int dst_y, Board* board)
 {
 	if (!check_leggal_movement(dst_x, dst_y))
 	{
-		if (this->_x_cordinate)
+		int x_factor = 0, y_factor = 0, x = 0, y = 0;
+
+		if (this->_x_cordinate - dst_x == 0)
 		{
+			if (this->_y_cordinate - dst_y < 0)
+			{
+				y_factor = 1;
+			}
+			else
+			{
+				y_factor = -1;
+			}
 		}
-		else if ()
+		else if (this->_x_cordinate - dst_x < 0)
 		{
+			x_factor = 1;
 		}
+		else
+		{
+			x_factor = -1;
+		}
+
+		for (x = this->_x_cordinate + x_factor, y = this->_y_cordinate + y_factor; x != dst_x || y != dst_y; x += x_factor, y += y_factor)
+		{
+			Piece* current_piece = board->get_piece(x, y);
+
+			if (current_piece != nullptr)
+			{
+				return true;
+			}
+		}
+
+		this->_x_cordinate = dst_x;
+		this->_y_cordinate = dst_y;
+
 		return false;
 	}
-	else
-	{
-		return true;
-	}
+	
+
+	return true;
 }
 
 bool Rook::check_leggal_movement(int dst_x, int dst_y)
