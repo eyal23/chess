@@ -1,3 +1,4 @@
+
 #include "Bishop.h"
 
 Bishop::Bishop(char x_cordinate, int y_cordinate, bool color):
@@ -11,7 +12,7 @@ Bishop::~Bishop()
 
 }
 
-unsigned int Bishop::move(int dst_x, int dst_y, Board* board)
+bool Bishop::move(int dst_x, int dst_y, Board* board)
 {
 	if (!check_leggal_movement(dst_x, dst_y))
 	{

@@ -10,6 +10,11 @@
 
 using std::string;
 
+/*
+	usage: constructor
+	in: no
+	out: no
+*/
 Board::Board()
 {
 	int runs = 0;
@@ -26,6 +31,11 @@ Board::Board()
 	this->_current_color = start_string[runs] - 48;
 }
 
+/*
+	usage: destructor
+	in: no
+	out: no
+*/
 Board::~Board()
 {
 	for (int x = 0; x < 8; x++)
@@ -37,6 +47,11 @@ Board::~Board()
 	}
 }
 
+/*
+	usage: the method moves a piece in the board
+	in: where to move string
+	out: 
+*/
 char* Board::move(string& user_msg)
 {
 	int* cordinates = convert_string(user_msg);
@@ -92,6 +107,11 @@ char* Board::move(string& user_msg)
 	}
 }
 
+/*
+	usage: constructor
+	in: no
+	out: no
+*/
 int* Board::convert_string(string& user_str) const
 {
 	int cordinates[4] = { user_str[0] - 97, user_str[1] - 49, user_str[2] - 97, user_str[3] - 49 };
@@ -99,21 +119,41 @@ int* Board::convert_string(string& user_str) const
 	return cordinates;
 }
 
+/*
+	usage: constructor
+	in: no
+	out: no
+*/
 Piece* Board::get_piece(int x_cordinate, int y_cordinate) const
 {
 	return this->_pieces[x_cordinate][y_cordinate];
 }
 
+/*
+	usage: constructor
+	in: no
+	out: no
+*/
 bool Board::get_current_color() const
 {
 	return this->_current_color;
 }
 
+/*
+	usage: constructor
+	in: no
+	out: no
+*/
 void Board::switch_color()
 {
 	this->_current_color = !this->_current_color;
 }
 
+/*
+	usage: constructor
+	in: no
+	out: no
+*/
 bool Board::check_chess() const
 {
 	int x = 0, y = 0;
@@ -147,6 +187,11 @@ bool Board::check_chess() const
 		check_chess_knight(x, y);
 }
 
+/*
+	usage: constructor
+	in: no
+	out: no
+*/
 bool Board::check_my_color(int x, int y)
 {
 	if (this->_pieces[x][y] == nullptr)
@@ -157,6 +202,11 @@ bool Board::check_my_color(int x, int y)
 	return this->_pieces[x][y]->get_color() != this->_current_color;
 }
 
+/*
+	usage: constructor
+	in: no
+	out: no
+*/
 bool Board::check_destination(int x, int y)
 {
 	if (this->_pieces[x][y] == nullptr)
@@ -167,6 +217,11 @@ bool Board::check_destination(int x, int y)
 	return this->_pieces[x][y]->get_color() == this->_current_color;
 }
 
+/*
+	usage: constructor
+	in: no
+	out: no
+*/
 void Board::add_piece(char type, int x, int y)
 {
 	bool color = 0;
@@ -225,6 +280,11 @@ void Board::add_piece(char type, int x, int y)
 	}
 }
 
+/*
+	usage: constructor
+	in: no
+	out: no
+*/
 bool Board::check_chess_diagonal(int king_x, int king_y, int x_factor, int y_factor) const
 {
 	int distance = NULL;
@@ -261,6 +321,11 @@ bool Board::check_chess_diagonal(int king_x, int king_y, int x_factor, int y_fac
 	return false;
 }
 
+/*
+	usage: constructor
+	in: no
+	out: no
+*/
 bool Board::check_chess_straight(int king_x, int king_y, bool x_y, int factor) const
 {
 	int distance = NULL;
@@ -314,6 +379,11 @@ bool Board::check_chess_straight(int king_x, int king_y, bool x_y, int factor) c
 	return false;
 }
 
+/*
+	usage: constructor
+	in: no
+	out: no
+*/
 bool Board::check_chess_knight(int king_x, int king_y) const
 {
 	int runs1 = 0, runs2 = 0, runs3 = 0, kx = king_x, ky = king_y;

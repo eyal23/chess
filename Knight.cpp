@@ -11,7 +11,7 @@ Knight::~Knight()
 
 }
 
-unsigned int Knight::move(int dst_x, int dst_y, Board* borad)
+bool Knight::move(int dst_x, int dst_y, Board* borad)
 {
 	if (!check_leggal_movement(dst_x, dst_y))
 	{

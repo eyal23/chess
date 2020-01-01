@@ -9,7 +9,7 @@ Queen::~Queen()
 {
 }
 
-unsigned int Queen::move(int dst_x, int dst_y, Board* board)
+bool Queen::move(int dst_x, int dst_y, Board* board)
 {
 	if (!check_leggal_movement(dst_x, dst_y))
 	{

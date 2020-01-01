@@ -11,7 +11,7 @@ Rook::~Rook()
 
 }
 
-unsigned int Rook::move(int dst_x, int dst_y, Board* board)
+bool Rook::move(int dst_x, int dst_y, Board* board)
 {
 	if (!check_leggal_movement(dst_x, dst_y))
 	{

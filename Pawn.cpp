@@ -11,7 +11,7 @@ Pawn::~Pawn()
 
 }
 
-unsigned int Pawn::move(int dst_x, int dst_y, Board* board)
+bool Pawn::move(int dst_x, int dst_y, Board* board)
 {
 	if (!check_leggal_movement(dst_x, dst_y))
 	{
