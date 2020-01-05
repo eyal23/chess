@@ -11,6 +11,19 @@ Rook::~Rook()
 
 }
 
+/*
+this method checks, if the way is leggal moves the
+rook in the "test" board  by returninig true or false
+
+input:
+	int dest_x - the next x position to go to
+	int dest_y - the next y position to go to
+	Board *board - the "test" board
+
+output:
+	bool parm that makes sure that the move action is ok or not,
+	if so then moves the rook
+*/
 bool Rook::move(int dst_x, int dst_y, Board* board)
 {
 	if (!check_leggal_movement(dst_x, dst_y))
@@ -57,6 +70,18 @@ bool Rook::move(int dst_x, int dst_y, Board* board)
 	return true;
 }
 
+/*
+this method checks whather if the way that the player decided to move his
+rook is primted, if so then the method returns the new position
+
+input:
+	int dest_x - the next x position to go to
+	int dest_y - the next y position to go to
+
+output:
+	the new position
+
+*/
 bool Rook::check_leggal_movement(int dst_x, int dst_y)
 {
 	int* differences = get_differences(dst_x, dst_y);
