@@ -9,7 +9,7 @@ in order to read and write information from and to the Backend
 #include <iostream>
 #include <thread>
 
-#define START_STRING "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1"
+#define START_STRING "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR0"
 
 using std::cout;
 using std::endl;
